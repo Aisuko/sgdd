@@ -3,10 +3,9 @@ import numpy as np
 import scipy.sparse as sp
 import torch
 import torch_geometric.transforms as T
-from ogb.nodeproppred import PygNodePropPredDataset, Evaluator
+from ogb.nodeproppred import PygNodePropPredDataset
 from deeprobust.graph.data import Dataset
 from deeprobust.graph.utils import get_train_val_test
-from torch_geometric.utils import train_test_split_edges
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
 import numpy as np
@@ -14,18 +13,10 @@ import torch.nn.functional as F
 from sklearn.preprocessing import StandardScaler
 from deeprobust.graph.utils import *
 from torch_geometric.data import NeighborSampler
-from torch_geometric.utils import add_remaining_self_loops, to_undirected, remove_self_loops
+from torch_geometric.utils import to_undirected, remove_self_loops
 from torch_geometric.datasets import Planetoid, StochasticBlockModelDataset
 
 from typing import Any
-from dgl.data import FraudDataset
-
-try:
-    from oolongTool.PostMessage import Wechat
-    P = Wechat.P
-    __builtins__["P"] = P
-except:
-    P = "P"
 
 
 def get_dataset(name: str, normalize_features=False, transform=None, if_dpr=True):
@@ -36,8 +27,7 @@ def get_dataset(name: str, normalize_features=False, transform=None, if_dpr=True
         dataset = PygNodePropPredDataset(name='ogbn-arxiv')
     elif name in ['yelpchi', 'amazon']:
         name = 'yelp' if name == 'yelpchi' else 'amazon'
-        dataset = FraudDataset(name, raw_dir=path)
-        dataset = from_dgl(dataset[0], name=name, hetero=False)
+        pass
     elif name.lower() == "sbm":
         num_nodes = [2000] * 3
         edge_probs = [[0.1, 0.05, 0.02],

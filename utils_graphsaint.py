@@ -1,8 +1,6 @@
 import scipy.sparse as sp
 import numpy as np
-import sys
 import json
-import os
 from sklearn.preprocessing import StandardScaler
 from torch_geometric.data import InMemoryDataset, Data
 import torch
